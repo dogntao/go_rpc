@@ -11,24 +11,26 @@ import (
 
 type server struct{}
 
-func (s *server) HelloWorld(ctx context.Context, rq *gs.HelloRequest) (rp *gs.HelloRes, err error) {
-	log.Printf("Receive:%v", rq.GetReq())
-	rp = &gs.HelloRes{Resp: rq.GetReq()}
+// 实现HelloWorld方法
+func (s *server) HelloWorld(ctx context.Context, req *gs.HelloRequest) (rep *gs.HelloResponse, err error) {
+	rep = &gs.HelloResponse{
+		Resp: req.GetReq(),
+	}
 	err = nil
 	return
 }
 
 func main() {
-	// 监听端口
+	// 创建服务器监听
 	lis, err := net.Listen("tcp", ":50051")
 	if err != nil {
-		log.Fatalf("%s", err)
+		log.Println("listen error")
 	}
-	// 创建grpc服务器实例
+	// 创建grpc实例
 	s := grpc.NewServer()
-	// 注册服务
-	gs.RegisterGreeterServer(s, &server{})
-	// 阻塞等待
+	// 注册方法
+	gs.RegisterHelloServer(s, &server{})
+	// 开启服务
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("%v", err)
 	}

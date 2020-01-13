@@ -2,14 +2,20 @@ syntax = "proto3";
 
 package go_rpc;
 
-service Greeter {
-    rpc HelloWorld (HelloRequest) returns (HelloRes);
+// 定义服务
+service Hello {
+    // 定义方法
+    rpc HelloWorld (HelloRequest) returns (HelloResponse);
 }
 
+// 定义请求参数
 message HelloRequest {
-    string req =1;
+    // 第一个请求参数,req,string类型
+    string req=1;
 }
 
-message HelloRes {
-    string resp =1;
+// 定义返回值
+message HelloResponse {
+    // 第一个返回值,resp,string类型
+    string resp=1;
 }
