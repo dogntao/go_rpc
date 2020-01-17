@@ -14,9 +14,11 @@ type server struct{}
 // 实现HelloWorld方法
 func (s *server) HelloWorld(ctx context.Context, req *gs.HelloRequest) (rep *gs.HelloResponse, err error) {
 	rep = &gs.HelloResponse{
-		Resp: req.GetReq(),
+		Resp: "server send:" + req.GetReq(),
 	}
 	err = nil
+	// 测试客户端输入
+	log.Printf("server get:%v", req.GetReq())
 	return
 }
 
@@ -28,7 +30,7 @@ func main() {
 	}
 	// 创建grpc实例
 	s := grpc.NewServer()
-	// 注册方法
+	// 注册服务
 	gs.RegisterHelloServer(s, &server{})
 	// 开启服务
 	if err := s.Serve(lis); err != nil {
