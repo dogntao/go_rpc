@@ -1,0 +1,16 @@
+package: go_rpc
+ignore:
+- go_rpc
+import:
+- package: github.com/golang/protobuf
+  version: ^1.3.2
+  subpackages:
+  - proto
+# - package: go_rpc
+#   subpackages:
+#   - go_rpc
+- package: google.golang.org/grpc
+  version: ^1.26.0
+  subpackages:
+  - codes
+  - status
